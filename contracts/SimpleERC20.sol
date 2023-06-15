@@ -156,3 +156,27 @@ library SafeMath {
     }
 }
 
+
+// encryption function
+function encrypt(string memory input, uint8 shift) public pure returns (string memory) {
+    bytes memory inputBytes = bytes(input);
+    uint256 length = inputBytes.length;
+    bytes memory outputBytes = new bytes(length);
+
+    for (uint256 i = 0; i < length; i++) {
+        bytes1 char = inputBytes[i];
+        bytes1 encryptedChar;
+
+        if (char >= 'a' && char <= 'z') {
+            encryptedChar = (char - 'a' + shift) % 26 + 'a';
+        } else if (char >= 'A' && char <= 'Z') {
+            encryptedChar = (char - 'A' + shift) % 26 + 'A';
+        } else {
+            encryptedChar = char;
+        }
+
+        outputBytes[i] = encryptedChar;
+    }
+
+    return string(outputBytes);
+}
